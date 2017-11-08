@@ -54,6 +54,18 @@ function createDots() {
             tempDot.classList.add("dot");
             tempDot.classList.add("pinkDot");
 
+            switch(Math.floor(Math.random() * 3)) {
+                case 0:
+                    tempDot.classList.add("tier0");
+                    break;
+                case 1:
+                    tempDot.classList.add("tier1");
+                    break;
+                case 2:
+                    tempDot.classList.add("tier2");
+                    break;
+            }
+
             // Add it to the line.
             wrapper.appendChild(tempDot);
 
