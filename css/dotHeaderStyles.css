@@ -1,4 +1,22 @@
 #dotHeaderWrapper {
     height: 200px;
     background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+#dotHeaderWrapper div.pinkDot {
+    background-color: rgb(200, 50, 100);
+}
+
+#dotHeaderWrapper div.dot {
+    opacity: 0.6;
+    transition: opacity 1s;
+}
+
+#dotHeaderWrapper div.dot:hover {
+    opacity: 1;
+    transition: opacity 100ms;
 }
