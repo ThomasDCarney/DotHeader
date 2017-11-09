@@ -4,6 +4,9 @@ var wrapper = document.getElementById("dotHeaderWrapper");
 // passed in as aruguments.
 var sideLength = getSideLength(60, 20);
 
+// This is an interval timer to automatically create random blips.
+var randomBlipInterval;
+
 createDots();
 
 /**
@@ -74,3 +77,20 @@ function createDots() {
     }
 
 } // end createDots
+
+randomBlipInterval = setInterval(randomBlip, 2000);
+
+/**
+ * This method will add the "blip" class to a random dot in the display. it also
+ * removes that class at a set time which can be changed depending on the effect
+ * you are looking for.
+ */
+function randomBlip() {
+
+    var randomChild = Math.floor(Math.random() * wrapper.children.length);
+    var childToBlip = wrapper.children[randomChild];
+
+    childToBlip.classList.toggle("blip");
+    setTimeout(function() {childToBlip.classList.toggle("blip");}, 1500);
+
+} // end randomBlip

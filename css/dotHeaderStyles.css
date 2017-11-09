@@ -1,11 +1,13 @@
 #dotHeaderWrapper {
     height: 200px;
-    width: 800px;
+    width: 600px;
+    margin: 0px auto;
     background-color: black;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
+
 }
 
 #dotHeaderWrapper div.pinkDot {
@@ -13,7 +15,7 @@
 }
 
 #dotHeaderWrapper div.dot {
-    transition: opacity 1s;
+    transition: opacity 1.5s;
 }
 
 .tier0 {
@@ -31,4 +33,9 @@
 #dotHeaderWrapper div.dot:hover {
     opacity: 1;
     transition: opacity 100ms;
+}
+
+#dotHeaderWrapper div.blip {
+    opacity: 0.8;
+    transition: opacity 2000ms;
 }
