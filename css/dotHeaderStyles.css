@@ -1,23 +1,45 @@
+/* Specify the dimensions, position, etc of the wrapper. Background color and/or
+ * images work in conjunction with the pixel color but can/should be specified
+ * independantly for a desired appearance.
+ */
 #dotHeaderWrapper {
+    margin: 0px auto;
     height: 200px;
     width: 600px;
-    margin: 0px auto;
     background-color: black;
+}
+
+#testWrapper2 {
+    margin: 0px auto;
+    height: 150px;
+    width: 400px;
+    background-color: black;
+}
+
+/* Wrappers need this bit to layout the pixels correctly */
+.pixelOverlay {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
-
 }
 
-#dotHeaderWrapper div.pinkDot {
-    background-color: rgb(200, 50, 100);
-}
-
-#dotHeaderWrapper div.dot {
+.pixel {
     transition: opacity 1.5s;
+    /* Modify the color as needed to work with the wrapper background */
+    background-color: rgb(200, 50, 100);
+
+    /* You can use the flex-grow property to force the elements to stretch and
+     * fill potential gaps if it is small enough to not ruin the effect. */
+    /*flex-grow: 1;*/
 }
 
+.pixel:hover {
+    opacity: 1;
+    transition: opacity 100ms;
+}
+
+/* Tiers are used to vary the appearance of individual pixel/element */
 .tier0 {
     opacity: 0.6;
 }
@@ -30,12 +52,8 @@
     opacity: 0.64;
 }
 
-#dotHeaderWrapper div.dot:hover {
-    opacity: 1;
-    transition: opacity 100ms;
-}
-
-#dotHeaderWrapper div.blip {
+/* Blip is a random, timed effect */
+.blip {
     opacity: 0.8;
     transition: opacity 2000ms;
 }

@@ -1,61 +1,33 @@
-var wrapper = document.getElementById("dotHeaderWrapper");
-
-// NOTE: To avoid gaps, wrapper dimensions should divide evenely with values
-// passed in as aruguments.
-var sideLength = getSideLength(60, 20);
-
-// This is an interval timer to automatically create random blips.
-var randomBlipInterval;
-
-createDots();
-
 /**
- * Since the boxes should be squares for this (change if you like) we need to
- * use the smaller dimension so nothing gets cut off. This will also result in
- * extra rows or columns in the other direction and possible gap at an end.
+ * This version of the Pixel Overlay is not setup like an object. It simply
+ * takes a container element and sets it up with the specific children and
+ * functionality.
  */
-function getSideLength(numColumns, numRows) {
 
-    var tempWidth = Math.floor(wrapper.offsetWidth / numColumns);
-    var tempHeight = Math.floor(wrapper.offsetHeight / numRows);
+function createPixelOverlay(container, desiredNumColumns, desiredNumRows) {
 
-    if(tempWidth < tempHeight) {
+    // To reference the optional interval timer (blip effect).
+    var randomBlipInterval;
 
-        return tempWidth;
+    /**
+    * This will create each "pixel" and place it in the specified container.
+    */
+    function createPixels() {
 
-    } else {
+        var i, j;
+        var tempDot;
 
-        return tempHeight;
+        // Figure out how many rows and columns are actually needed.
+        var sideLength = calcSideLength();
+        var numElements = Math.floor(container.offsetHeight / sideLength) *
+                            Math.floor(container.offsetWidth / sideLength);
 
-    }
+        for(i = 0; i < numElements; i++) {
 
-} // end getSideLength
-
-
-/**
- * This will create each "dot" or element of the matrix. It's faster and more
- * bandwidth efficient than saving hundreds+ in the HTML.
- */
-function createDots() {
-
-    var i, j;
-    var tempDot;
-
-    // Figure out how many rows and columns are needed.
-    var numRows = Math.floor(wrapper.offsetHeight / sideLength);
-    var numColumns = Math.floor(wrapper.offsetWidth / sideLength);
-
-    // Create the individual elements.
-    for(i = 0; i < numRows; i++) {
-
-        for(j = 0; j < numColumns; j++) {
-
-            // Create the element.
             tempDot = document.createElement("DIV");
             tempDot.style.height = sideLength + "px";
             tempDot.style.width = sideLength + "px";
-            tempDot.classList.add("dot");
-            tempDot.classList.add("pinkDot");
+            tempDot.classList.add("pixel");
 
             switch(Math.floor(Math.random() * 3)) {
                 case 0:
@@ -70,27 +42,64 @@ function createDots() {
             }
 
             // Add it to the line.
-            wrapper.appendChild(tempDot);
+            container.appendChild(tempDot);
 
         }
 
-    }
+    } // end createPixels
 
-} // end createDots
+    /**
+    * Each element "should" be square. As such, the argument resulting in the
+    * smaller calculated dimension is chosen. This may result in extra
+    * rows/columns in the other direction but "at least" the requested number of
+    * rows and columns will be present.
+    */
+    function calcSideLength() {
 
-randomBlipInterval = setInterval(randomBlip, 2000);
+        var tempWidth = Math.floor(container.offsetWidth / desiredNumColumns);
+        var tempHeight = Math.floor(container.offsetHeight / desiredNumRows);
 
-/**
- * This method will add the "blip" class to a random dot in the display. it also
- * removes that class at a set time which can be changed depending on the effect
- * you are looking for.
- */
-function randomBlip() {
+        if(tempWidth < tempHeight) {
 
-    var randomChild = Math.floor(Math.random() * wrapper.children.length);
-    var childToBlip = wrapper.children[randomChild];
+            return tempWidth;
 
-    childToBlip.classList.toggle("blip");
-    setTimeout(function() {childToBlip.classList.toggle("blip");}, 1500);
+        } else {
 
-} // end randomBlip
+            return tempHeight;
+
+        }
+
+    } // end calcSideLength
+
+    /**
+    * This method will start the "blip" effect which triggers a random pixel
+    * element, making it less transparent. This simulates a subtle "glitch"
+    * effect in the overlay.
+    */
+    function randomBlip() {
+
+        var childToBlip =
+            container.children[Math.floor(Math.random() *
+                                container.children.length)];
+
+        // Trigger the blip.
+        childToBlip.classList.toggle("blip");
+
+        // Set the timer to remove the blip.
+        setTimeout(function() {childToBlip.classList.toggle("blip");}, 1500);
+
+    } // end randomBlip
+
+    // get everything going.
+    createPixels();
+    randomBlipInterval = setInterval(randomBlip, 2000);
+
+} // end createPixelOverlay
+
+var wrapper1 = document.getElementById("dotHeaderWrapper");
+
+createPixelOverlay(wrapper1, 60, 10);
+
+var wrapper2 = document.getElementById("testWrapper2");
+
+createPixelOverlay(wrapper2, 10, 5);
